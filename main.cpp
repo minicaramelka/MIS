@@ -13,27 +13,16 @@ LList::~LList()
     {
 
     }
-int& LList::operator[](const size_t pos) const
+int& LList::operator[](size_t idx) const
 {
-	return getNode(pos)->value;
-}
-
-LList::Node* LList::getNode(const size_t pos) const
-{
-	if (pos < 0) {
-		assert(pos < 0);
-	}
-	else if (pos >= this->_size) {
-		assert(pos >= this->_size);
-	}
-
-	Node* bufNode = this->_head;
-	for (int i = 0; i < pos; ++i) {
+	Node* bufNode = this->head;
+	for (int i = 0; i < idx; ++i) {
 		bufNode = bufNode->next;
 	}
 
-	return bufNode;
+	return bufNode->data;
 }
+
 
 void LList::push_back(int val)
     {
@@ -60,23 +49,24 @@ void LList::push_front(int val)
             Node *tmp = head;
             head = nd;
             nd->next = tmp;
+            nd->data = val;
         }
         else
         {
             head = nd;
             nd->next = NULL;
+            nd->data = val;
         }
     }
 
-void LList::pop_back(int val)
+void LList::pop_back()
     {
-    Node *current = head;
-
-
-
+        Node *tmp = head;
+        int counter = 0;
+        delete head;
     }
 
-void LList::pop_front(int val)
+void LList::pop_front()
     {
     if(head)
         {
@@ -89,7 +79,15 @@ void LList::pop_front(int val)
             cout << "The list is empty!" << endl;
     }
 
-//size_t size() const;
+size_t LList::size() const{
+     int counter=0;
+     Node *nd = head;
+     while(nd){
+        nd = nd->next;
+        counter++;
+     }
+     return counter;
+}
 
 void LList::erase_at(size_t idx)
     {
@@ -107,11 +105,18 @@ void LList::reverse()
 int main()
     {
     LList l;
+    LList b;
+    l.push_front(0);
     l.push_back(1);
-	l.push_front(0);
 	l.push_back(2);
-	for(size_t i = 0; i < 3; ++i, cout << " ")
+	for(size_t i = 0; i < l.size(); ++i, cout << " ")
         cout << l[i];
+    cout<<endl;
+    l.pop_back();
+    for(size_t i = 0; i < l.size(); ++i, cout << " ")
+        cout << l[i];
+    cout<<endl;
+
 
 
     }
